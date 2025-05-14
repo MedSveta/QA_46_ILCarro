@@ -16,9 +16,13 @@ public class SearchPage extends BasePage {
 
     @FindBy(xpath = "//a[text()=' Sign up ']")
     WebElement btnSignUp;
+    @FindBy(xpath = "//a[text()=' Log in ']")
+    WebElement btnLogin;
 
     public void clickBtnSignUp() {
         clickWait(btnSignUp, 5);
-
+    }
+    public void clickBtnLogin(){
+        clickWait(btnLogin, 3);
     }
 }
