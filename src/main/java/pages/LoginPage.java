@@ -1,6 +1,6 @@
 package pages;
 
-import dto.UserDtoLombok;
+import dto.RegistrationBodyDto;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,7 +25,7 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//div[@class='error']")
     WebElement errorMessage;
 
-    public void typeLoginForm(UserDtoLombok user){
+    public void typeLoginForm(RegistrationBodyDto user){
         inputEmail.sendKeys(user.getUsername());
         inputPassword.sendKeys(user.getPassword());
     }
@@ -33,6 +33,11 @@ public class LoginPage extends BasePage{
     public void clickBtnYalla(){
         clickWait(btnYalla, 3);
     }
+
+    public void clickBtnYallaWOWait(){
+        btnYalla.click();
+    }
+
     public boolean isPopUpMessagePresent(String text){
         return validateTextInElementWait(popUpMessage,
                 text, 5);

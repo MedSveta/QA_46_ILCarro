@@ -1,6 +1,6 @@
 package pages;
 
-import dto.UserDtoLombok;
+import dto.RegistrationBodyDto;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -32,7 +32,7 @@ public class RegistrationPage extends BasePage {
     @FindBy(xpath = "//div[@class='error']")
     WebElement errorMessage;
 
-    public void typeRegistrationForm(UserDtoLombok user) {
+    public void typeRegistrationForm(RegistrationBodyDto user) {
         inputName.sendKeys(user.getFirstName());
         inputLastName.sendKeys(user.getLastName());
         inputEmail.sendKeys(user.getUsername());
@@ -50,6 +50,9 @@ public class RegistrationPage extends BasePage {
     }
     public void clickBtnYalla(){
         clickWait(btnYalla, 3);
+    }
+    public void clickBtnYallaWOWait(){
+        btnYalla.click();
     }
 
     public boolean isPopUpMessagePresent(String text){

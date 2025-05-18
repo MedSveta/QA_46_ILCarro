@@ -1,6 +1,6 @@
 package tests;
 
-import dto.UserDtoLombok;
+import dto.RegistrationBodyDto;
 import manager.AppManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,7 +15,7 @@ public class RegistrationTests extends AppManager {
     @Test
     public void registrationPositiveTest() {
         int i = new Random().nextInt(1000) + 1000;
-        UserDtoLombok user = UserDtoLombok.builder()
+        RegistrationBodyDto user = RegistrationBodyDto.builder()
                 .firstName("Bob")
                 .lastName("Dilan")
                 .username(i + "bob_dilan@gmail.com")
@@ -31,7 +31,7 @@ public class RegistrationTests extends AppManager {
     @Test
     public void registrationNegativeTest_WrongEmail() {
         int i = new Random().nextInt(1000) + 1000;
-        UserDtoLombok user = UserDtoLombok.builder()
+        RegistrationBodyDto user = RegistrationBodyDto.builder()
                 .firstName("Bob")
                 .lastName("Dilan")
                 .username(i + "bob_dilan_gmail.com")
@@ -40,13 +40,14 @@ public class RegistrationTests extends AppManager {
         registrationPage = new RegistrationPage(getDriver());
         registrationPage.typeRegistrationForm(user);
         registrationPage.clickCheckBox();
+        registrationPage.clickBtnYallaWOWait();
         Assert.assertTrue(registrationPage
                 .validateErrorMessage("Wrong email format"));
     }
     @Test
     public void registrationNegativeTest_EmptyLastName() {
         int i = new Random().nextInt(1000) + 1000;
-        UserDtoLombok user = UserDtoLombok.builder()
+        RegistrationBodyDto user = RegistrationBodyDto.builder()
                 .firstName("Bob")
                 .lastName("")
                 .username(i + "bob_dilan@gmail.com")
@@ -55,13 +56,14 @@ public class RegistrationTests extends AppManager {
         registrationPage = new RegistrationPage(getDriver());
         registrationPage.typeRegistrationForm(user);
         registrationPage.clickCheckBox();
+        registrationPage.clickBtnYallaWOWait();
         Assert.assertTrue(registrationPage
                 .validateErrorMessage("Last name is required"));
     }
     @Test
     public void registrationNegativeTest_SpaceLastName() {
         int i = new Random().nextInt(1000) + 1000;
-        UserDtoLombok user = UserDtoLombok.builder()
+        RegistrationBodyDto user = RegistrationBodyDto.builder()
                 .firstName("Bob")
                 .lastName(" ")
                 .username(i + "bob_dilan@gmail.com")
@@ -70,14 +72,14 @@ public class RegistrationTests extends AppManager {
         registrationPage = new RegistrationPage(getDriver());
         registrationPage.typeRegistrationForm(user);
         registrationPage.clickCheckBox();
-        registrationPage.clickBtnYalla();
+        registrationPage.clickBtnYallaWOWait();
         Assert.assertTrue(registrationPage
                 .isPopUpMessagePresent("must not be blank"));
     }
     @Test
     public void registrationNegativeTest_WOCheckBox() {
         int i = new Random().nextInt(1000) + 1000;
-        UserDtoLombok user = UserDtoLombok.builder()
+        RegistrationBodyDto user = RegistrationBodyDto.builder()
                 .firstName("Bob")
                 .lastName("Dilan")
                 .username(i + "bob_dilan@gmail.com")
@@ -85,7 +87,7 @@ public class RegistrationTests extends AppManager {
         new SearchPage(getDriver()).clickBtnSignUp();
         registrationPage = new RegistrationPage(getDriver());
         registrationPage.typeRegistrationForm(user);
-        //registrationPage.clickBtnYalla();
+        registrationPage.clickBtnYallaWOWait();
         Assert.assertTrue(registrationPage.btnYallaDisabled());
     }
 }
