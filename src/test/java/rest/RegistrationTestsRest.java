@@ -1,14 +1,18 @@
 package rest;
 
 import api_rest.AuthenticationController;
+import dto.ErrorMessageDtoString;
 import dto.RegistrationBodyDto;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.util.Random;
 
 public class RegistrationTestsRest extends AuthenticationController {
+    SoftAssert softAssert = new SoftAssert();
+
     @Test
     public void registrationPositiveTest(){
         int i = new Random().nextInt(1000);
@@ -33,4 +37,21 @@ public class RegistrationTestsRest extends AuthenticationController {
         Assert.assertEquals(registrationLoginHTTP(user,REGISTRATION_URL)
                 .getStatusCode(), 200);
     }
+    @Test
+    public void registrationNegativeTest_WrongEmail(){
+        int i = new Random().nextInt(1000);
+        RegistrationBodyDto user = RegistrationBodyDto.builder()
+                .username("mursik"+i+"gmail.com")
+                .password("Password123!")
+                .firstName("Mursik")
+                .lastName("Mur").build();
+        Response response = registrationLogin(user, REGISTRATION_URL);
+        softAssert.assertEquals(registrationLogin(user,REGISTRATION_URL)
+                .getStatusCode(), 400);
+        ErrorMessageDtoString errorMessage = response.getBody().as(ErrorMessageDtoString.class);
+        softAssert.assertEquals(errorMessage.getError(), "Bad Request");
+        softAssert.assertTrue(errorMessage.getMessage().toString().contains("well-formed email address"));
+        softAssert.assertAll();
+    }
+
 }
