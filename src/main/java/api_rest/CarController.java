@@ -37,16 +37,45 @@ public class CarController implements BaseApi {
                 .contentType(ContentType.JSON)
                 .header("Authorization", tokenDto.getAccessToken())
                 .when()
-                .post(BASE_URL+ADD_NEW_CAR_URL)
+                .post(BASE_URL + ADD_NEW_CAR_URL)
                 .thenReturn();
     }
+
     public Response addNewCar_WrongToken(CarDto car, String token) {
         return given()
                 .body(car)
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .when()
-                .post(BASE_URL+ADD_NEW_CAR_URL)
+                .post(BASE_URL + ADD_NEW_CAR_URL)
                 .thenReturn();
     }
+
+    public Response getUserCars() {
+        return given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", tokenDto.getAccessToken())
+                .when()
+                .get(BASE_URL + GET_USER_CAR_URL)
+                .thenReturn();
+    }
+
+    public Response getUserCars_WrongUrl(String url) {
+        return given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", tokenDto.getAccessToken())
+                .when()
+                .get(BASE_URL + url)
+                .thenReturn();
+    }
+
+    public Response deleteCarBySerialNumber(String serialNumber) {
+        return given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", tokenDto.getAccessToken())
+                .when()
+                .delete(BASE_URL + DELETE_CAR_URL + serialNumber)
+                .thenReturn();
+    }
+
 }

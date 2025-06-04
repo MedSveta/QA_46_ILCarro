@@ -8,6 +8,8 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Random;
 
 public class AddNewCarTests extends CarController {
@@ -82,4 +84,5 @@ public class AddNewCarTests extends CarController {
                 .equals("Bad Request"));
         softAssert.assertAll();
     }
+
 }
